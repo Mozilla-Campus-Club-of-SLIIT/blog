@@ -111,7 +111,7 @@ npm run lint     # Run ESLint
 
 The user interface was designed in **Figma**, focusing on minimalism, readability, and accessibility following Mozilla's design principles.
 
-🔗 **[View Figma Design File](https://www.figma.com/design/8Gjpe6lI88ih7nkFLIV9Cg/Mozilla-Blog-Web-Prototype?node-id=0-1&t=3YzF6IsLko1l4ibQ-1)**
+🔗 **[View Figma Design File](https://www.figma.com/proto/AfmCOomsbZtGF4FF7aDSsy/Blog-site)**
 
 **Design Screens:**
 - 🏠 Landing Page with featured story
