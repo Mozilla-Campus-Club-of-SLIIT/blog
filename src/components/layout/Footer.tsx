@@ -93,7 +93,7 @@ export default function Footer() {
             <div className="flex gap-4">
               {/* Facebook */}
               <a
-                href="https://facebook.com"
+                href="https://facebook.com/sliitmozilla"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 transition-colors hover:text-gray-900"
@@ -110,7 +110,7 @@ export default function Footer() {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/sliitmozilla"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 transition-colors hover:text-gray-900"
@@ -127,7 +127,7 @@ export default function Footer() {
 
               {/* LinkedIn */}
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/company/sliitmozilla"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 transition-colors hover:text-gray-900"
@@ -144,7 +144,7 @@ export default function Footer() {
 
               {/* YouTube */}
               <a
-                href="https://youtube.com"
+                href="https://youtube.com/@sliitmozilla"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-500 transition-colors hover:text-gray-900"
