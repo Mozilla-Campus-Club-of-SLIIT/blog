@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About | SLIIT Mozilla Blog",
@@ -20,6 +21,20 @@ function CornerBox({ children }: Readonly<{ children: React.ReactNode }>) {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <section className = "flex items-center justify-center gap-6 bg-gradient-to-b from-white to-gray-50 py-16 md:py-24">
+        <div className = "container mx-auto px-4">
+          <div className = "flex justify-center">
+            <Image
+              src = "/HeroLogo.png"
+              alt = "SLIIT Mozilla Blog Logo"
+              width={800}
+              height={400}
+              className = "h-auto w-full max-w-md md:max-w-lg"
+              priority
+            />
+          </div>
+        </div>     
+      </section>
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="space-y-14">
           {/* Top Intro Box */}
