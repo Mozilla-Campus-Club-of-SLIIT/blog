@@ -26,7 +26,7 @@ export default function AboutPage() {
           <div className = "flex justify-center">
             <Image
               src = "/HeroLogo.png"
-              alt = "SLIIT Mozilla Blog Logo"
+              alt = "SLIIT Mozilla Campus Club Logo"
               width={800}
               height={400}
               className = "h-auto w-full max-w-md md:max-w-lg"
