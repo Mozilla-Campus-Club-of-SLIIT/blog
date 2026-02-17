@@ -27,16 +27,16 @@ export default function AboutPage() {
             <Image
               src = "/HeroLogo.png"
               alt = "SLIIT Mozilla Campus Club Logo"
-              width={800}
-              height={400}
-              className = "h-auto w-full max-w-md md:max-w-lg"
+              width={443}
+              height={127}
+              className = "h-auto w-full max-w-[443px]"
               priority
             />
           </div>
         </div>     
       </section>
-      <div className="mx-auto max-w-6xl px-4 py-16">
-        <div className="space-y-14">
+      <div className="mx-auto max-w-[1156px] px-4 py-16">
+        <div className="flex flex-col gap-12">
           {/* Top Intro Box */}
           <div className="flex justify-center">
             <div className="w-fit max-w-3xl">
@@ -53,7 +53,7 @@ export default function AboutPage() {
           </div>
 
           {/* Vision & Mission */}
-          <div className="grid gap-10 md:grid-cols-2">
+          <div className="grid gap-12 md:grid-cols-2">
             <CornerBox>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">Vision</h2>
               <p className="text-gray-600 leading-relaxed">
