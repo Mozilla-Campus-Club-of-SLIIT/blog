@@ -5,10 +5,10 @@ import { BlogPost } from "@/types/blog";
 import Badge from "@/components/ui/Badge";
 
 interface PostCardProps {
-  post: BlogPost;
+  post: Readonly<BlogPost>;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post }: Readonly<PostCardProps>) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-md border border-gray-100">
       
@@ -20,16 +20,18 @@ export default function PostCard({ post }: PostCardProps) {
             Changed to 'aspect-[1080/1241]' to match your specific image dimensions perfectly.
             This ensures the entire 1080x1241 image is visible without cropping.
         */}
-        <div className="relative aspect-[1080/1241] w-full overflow-hidden rounded-xl bg-gray-50">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            /* 'object-contain' is the safest choice for text-heavy banners 
-               to ensure every pixel is shown. */
-            className="object-contain transition-transform duration-300 group-hover:scale-105"
-          />
-        </div>
+        {post.cardImage && (
+          <div className="relative aspect-[1080/1241] w-full overflow-hidden rounded-xl bg-gray-50">
+            <Image
+              src={post.cardImage}
+              alt={post.title}
+              fill
+              /* 'object-contain' is the safest choice for text-heavy banners 
+                 to ensure every pixel is shown. */
+              className="object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )}
       </div>
 
       {/* 3. Content Alignment:
@@ -39,15 +41,17 @@ export default function PostCard({ post }: PostCardProps) {
         
         {/* Author Row */}
         <div className="mb-3 flex items-center gap-2">
-          <div className="h-6 w-6 overflow-hidden rounded-full border border-gray-100">
-            <Image
-              src={post.author.avatarUrl}
-              alt={post.author.name}
-              width={24}
-              height={24}
-              className="object-cover"
-            />
-          </div>
+          {post.author.avatarUrl && (
+            <div className="h-6 w-6 overflow-hidden rounded-full border border-gray-100">
+              <Image
+                src={post.author.avatarUrl}
+                alt={post.author.name}
+                width={24}
+                height={24}
+                className="object-cover"
+              />
+            </div>
+          )}
           <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
             <span className="text-gray-800">{post.author.name}</span>
             <span>•</span>
@@ -61,7 +65,7 @@ export default function PostCard({ post }: PostCardProps) {
         </div>
 
         {/* Title */}
-        <Link href={`/blog/${post.slug}`}>
+        <Link href={`/posts/${post.slug}`}>
           <h3 className="text-lg font-bold leading-tight tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-[#D45D29]">
             {post.title}
           </h3>

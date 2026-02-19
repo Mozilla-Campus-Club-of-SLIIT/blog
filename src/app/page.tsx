@@ -1,11 +1,16 @@
-import { MOCK_POSTS } from "@/data/mock-posts";
 import FeaturedCard from "@/components/blog/FeaturedCard";
 import PostCard from "@/components/blog/PostCard";
 import Link from "next/link";
+import { getAllPosts } from "@/lib/posts";
 
 export default function Home() {
-  const featuredPost = MOCK_POSTS[0];
-  const recentPosts = MOCK_POSTS.slice(1);
+  const posts = getAllPosts();
+  const featuredPost = posts.find((post) => post.featuredImage);
+  const recentPosts = posts.filter(
+    (post) =>
+      post.cardImage &&
+      post.id !== featuredPost?.id
+  ).slice(0, 4);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -15,7 +20,11 @@ export default function Home() {
           <h1 className="mb-8 text-4xl font-bold tracking-tight text-[#D9622B]">
             Featured Story
           </h1>
-          <FeaturedCard post={featuredPost} />
+          {featuredPost ? (
+            <FeaturedCard post={featuredPost} />
+          ) : (
+            <p className="text-gray-600">No featured post available.</p>
+          )}
         </section>
 
         {/* Recently Published Section */}
@@ -33,7 +42,7 @@ export default function Home() {
         {/* Explore More Button Section */}
         <section className="flex justify-center">
           <Link
-            href="/blog"
+            href="/posts"
             className="mx-auto mt-12 flex items-center gap-2 rounded-full bg-orange-500 px-8 py-3 font-semibold text-white shadow-md transition-colors hover:bg-orange-600"
           >
             Explore More

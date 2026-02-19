@@ -11,6 +11,8 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   coverImage: string;
+  cardImage: string;
+  featuredImage: string;
   publishedAt: string;
   readTime: string;
   author: Author;
