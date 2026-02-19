@@ -1,0 +1,212 @@
+---
+id: "3"
+slug: "practical-devops-playbook-for-deploying-academic-projects"
+title: "Practical DevOps Playbook for Deploying Academic Projects"
+excerpt: "University projects usually begin with tons of ideas and excitement. But as the deadline approaches, you may hear, 'Wait, it only works on my laptop!' That's where DevOps comes in, not as a fancy word, but as a practical approach to make your academic projects more reliable, scalable, and production ready."
+coverImage: "/images/featured/devops-playbook.png"
+cardImage: "/images/cards/devops-playbook.png"
+featuredImage: "/images/featured/devops-playbook.png"
+publishedAt: "2025-10-31"
+readTime: "5 min read"
+author:
+  id: "sadeesha-perera"
+  name: "Sadeesha Perera"
+  avatarUrl: "/images/avatars/sadeesha.png"
+  role: "President at SLIIT Mozilla"
+tags:
+  - "DevOps"
+  - "CI/CD"
+  - "Docker"
+  - "Academic Projects"
+---
+
+University projects usually begin with tons of ideas and excitement. But as the deadline approaches, you may hear, "Wait, it only works on my laptop!" That's where DevOps comes in, not as a fancy word, but as a practical approach to make your academic projects more reliable, scalable, and production ready. DevOps is a combination of development and operations practices that focus on automating workflows, improving collaboration, and delivering software faster and more reliably. It bridges the gap between writing code and running it successfully in real-world environments.
+
+In this blog article, we'll explore a step by step guide that tailored for deploying most of academic projects, helping you go beyond "just building" and start delivering software like a professional.
+
+## Why DevOps Matters for Student Projects
+
+Most university projects focus on coding, but **deployment and maintenance** are often ignored. When you adopt DevOps early, you gain:
+
+- **Automation confidence**: No more manual setup nightmares.
+- **Collaboration clarity**: Everyone knows what's released, where, and how.
+- **Real world readiness**: You'll learn concepts used in IT industry such as CI/CD, containers, and cloud.
+
+## Step 1: Plan for DevOps from Day One
+
+Before writing your first line of code, decide how you'll build, test, and deploy.
+
+**Checklist for project setup:**
+
+- ✅ Use version control (GitHub/GitLab).
+- ✅ Define your project structure (frontend, backend, database).
+- ✅ Add a .gitignore and README.md.
+- ✅ Create a basic CI pipeline file (GitHub Actions/GitLab CI).
+
+**Sample CI pipeline script:**
+
+```yaml
+name: Build and Test
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm test
+```
+
+This ensures your project builds successfully with every commit.
+
+## Step 2: Containerize with Docker
+
+A common student nightmare is,
+
+> "It worked on my laptop, but not on my teammate's."
+
+Containerization eliminates this issue by creating consistent environments on any machine or even in the cloud!
+
+Here is an example Dockerfile for containerize a Node.js app:
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+Then, build and run your container locally:
+
+```bash
+docker build -t myapp .
+docker run -p 3000:3000 myapp
+```
+
+## Step 3: Automate Deployment with CI/CD
+
+Continuous Integration (CI) builds and tests your code automatically.
+Continuous Deployment (CD) pushes it to production server.
+
+**Sample GitHub Action:**
+
+```yaml
+name: Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker image
+        run: |
+          docker build -t myusername/my-app:latest .
+          docker push myusername/my-app:latest
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            cd /var/www/project
+            git pull
+            # Pull latest Docker image from Docker Hub
+            docker pull myusername/my-app:latest
+            docker-compose up -d
+```
+
+Like above setup, every merge to main automatically updates your live project. You can refer to these Action YAML files available on the GitHub Marketplace for your projects on GitHub. They can be easily integrated into your workflows to automate tasks and streamline your CI/CD processes.
+Check them out here: GitHub Actions Marketplace
+
+## Cloud Services (Free for Students)
+
+deploying doesn't have to cost money. In fact, as a student, you have free cloud credits available through the GitHub Student Developer Pack.
+
+By verifying your student email at education.github.com/pack, you'll get:
+
+- $200 in DigitalOcean credits
+- $100 in Azure credits
+- Access to cloud platforms like Heroku (Free $13 per month for 24 months)
+- Free top level domain names via Namecheap, .tech Domain and Name.com
+
+You can easily deploy your Dockerized applications using these credits. It is a great way to simulate real world infrastructure for your academic portfolio.
+
+If you prefer simpler options to deploy your frontend or backend apps, try these platforms:
+
+| Platform | Best For | Notes |
+| --- | --- | --- |
+| Google Cloud Run | Dockerized apps | Free up to 2 million monthly requests |
+| Vercel | React, Next.js, serverless functions | CI/CD built-in |
+| Netlify | Frontend hosting | Git integration and SSL by default |
+| Render | Node.js, Flask, Django Apps | Free tier, auto deploy from GitHub repository |
+
+These services allow you to host your project without managing servers or paying for infrastructure. Ideal for quick project demonstrations.
+
+## Step 4: Configuring Custom Domain Name
+
+After deployment, you'll want your project accessible via a top level domain (e.g., projectname.tech) instead of a random IP address or domain name.
+
+**How to Set Up**
+
+1. Claim a domain via Domain registrar (eg: Namecheap, .tech).
+2. Go to your hosting provider (e.g. Azure, DigitalOcean, AWS).
+3. Find your server's public IP address.
+4. Add a DNS "A" record in your Domain registrar:
+
+```
+Host: @
+Value: <your-server-IP>
+TTL: Automatic
+```
+
+5. Wait for DNS propagation (5-10 minutes).
+
+Now, your app is accessible via your custom domain, making it perfect for branded project demonstrations.
+
+## Step 5: Monitor and Improve
+
+Even small projects benefit from basic monitoring. Use lightweight tools like:
+
+- **UptimeRobot** that alerts if your app goes down.
+- **Prometheus, Grafana**, if you want to showcase advanced DevOps skills.
+
+Remember, academic projects aren't graded just on functionality anymore. Reliability and maintainability matter too.
+
+## Step 6: Document Everything
+
+Good documentation separates an A+ project from a last minute submission.
+
+Include:
+
+- Setup instructions (README.md)
+- System Architecture diagram
+- Environment variable examples (.env.example)
+- CI/CD workflow diagram
+
+## Conclusion
+
+By integrating DevOps practices early like version control, containerization, CI/CD pipelines, and cloud deployment. You transform your assignment project into a showcase of real-world engineering skills.
+
+DevOps is ultimately about consistency, automation, and collaboration. Even simple projects benefit from reproducible builds, automated testing, and transparent deployment processes. As a student, embracing these habits now not only improves your project grades but also prepares you for professional software deliveries.
+
+So plan smart, automate early, and deploy confidently because the best student projects don't just work on one machine, they should be accessible to anyone!
