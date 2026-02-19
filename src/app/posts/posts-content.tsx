@@ -3,11 +3,15 @@
 import React from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import PostCard from '@/components/blog/PostCard';
-import { MOCK_POSTS } from '@/data/mock-posts';
+import { BlogPost } from '@/types/blog';
 
 const POSTS_PER_PAGE = 9;
 
-export default function PostsContent() {
+interface PostsContentProps {
+  posts: ReadonlyArray<BlogPost>;
+}
+
+export default function PostsContent({ posts }: Readonly<PostsContentProps>) {
   const searchParams = useSearchParams();
   const router = useRouter();
   
@@ -16,10 +20,20 @@ export default function PostsContent() {
   const currentPage = currentPageParam ? Number.parseInt(currentPageParam, 10) : 1;
 
   // Calculate pagination
-  const totalPages = Math.ceil(MOCK_POSTS.length / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const postsToDisplay = MOCK_POSTS.slice(startIndex, endIndex);
+  const postsToDisplay = posts.slice(startIndex, endIndex);
+
+  if (posts.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-gray-600">No posts published yet.</p>
+        </div>
+      </div>
+    );
+  }
 
   // Ensure valid page number
   if (currentPage < 1 || currentPage > totalPages) {
