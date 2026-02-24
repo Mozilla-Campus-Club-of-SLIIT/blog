@@ -12,7 +12,7 @@ export default function PostsPage() {
         
         {/* Page Title */}
         <div className="mb-28 text-center">
-          <h1 className="text-5xl font-bold text-gray-900">
+          <h1 className="text-5xl font-bold text-[#D9622B]">
             Editor&apos;s Corner
           </h1>
         </div>
